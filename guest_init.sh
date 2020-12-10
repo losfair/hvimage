@@ -22,4 +22,8 @@ echo "Gateway: $GATEWAY"
 /busybox mount -t proc proc /rootfs/proc
 /busybox mount -t sysfs sysfs /rootfs/sys
 /busybox mount -t devtmpfs devtmpfs /rootfs/dev
+
+/busybox mkdir /rootfs/lib
+/busybox mv /lib/modules /rootfs/lib/
+
 exec /busybox chroot /rootfs /init
