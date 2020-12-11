@@ -27,7 +27,7 @@ if [ "$BUILD_DISK_IMAGE" = "1" ]; then
     cp "$(dirname $0)"/vmlinuz* hvimage.build/vmlinuz || exit 1
     cp ./hvimage.initrd.img ./hvimage.build/initrd.img || exit 1
     mkdir -p ./hvimage.build/boot/grub || exit 1
-    cp "$(dirname $0)/grub.cfg" ./hvimage.build/boot/grub/ || exit 1
+    cat "$(dirname $0)/grub.cfg" | sed "s~__DISK_IMAGE_IPADDR__~$DISK_IMAGE_IPADDR~g" | sed "s~__DISK_IMAGE_GATEWAY__~$DISK_IMAGE_GATEWAY~g" > ./hvimage.build/boot/grub/grub.cfg
     fakeroot mke2fs -d ./hvimage.build hvimage.build.img "$DISK_IMAGE_SIZE" || exit 1
 fi
 
